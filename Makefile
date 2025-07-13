@@ -1,6 +1,5 @@
 .PHONY: all build gen clean server client proto deps
 
-# Variables
 SERVER_BINARY = bin/jacuzzi-server
 CLIENT_BINARY = bin/jacuzzi-client
 PROTO_DIR = proto
@@ -16,8 +15,9 @@ deps:
 	go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
 	go install github.com/bufbuild/buf/cmd/buf@latest
 
-# Generate protobuf code
+# Generate protobuf code + build server UI (svelte app)
 gen: proto
+	go generate ./...
 
 proto:
 	buf generate
