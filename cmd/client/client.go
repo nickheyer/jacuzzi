@@ -7,8 +7,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/nickheyer/jacuzzi/client/config"
-	"github.com/nickheyer/jacuzzi/client/monitor"
+	"github.com/nickheyer/jacuzzi/pkg/client/config"
+	climon "github.com/nickheyer/jacuzzi/pkg/client/monitor"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -98,7 +98,7 @@ func runClient(cmd *cobra.Command, args []string) error {
 	defer conn.Close()
 
 	client := jacuzziv1.NewTemperatureServiceClient(conn)
-	tempMonitor := monitor.NewTemperatureMonitor()
+	tempMonitor := climon.NewTemperatureMonitor()
 
 	log.Printf("Starting temperature monitoring client (ID: %s)", clientID)
 	log.Printf("Reporting to server: %s", cfg.Server.Address)
@@ -123,7 +123,7 @@ func runClient(cmd *cobra.Command, args []string) error {
 	return nil
 }
 
-func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.TemperatureServiceClient, monitor *monitor.TemperatureMonitor, clientID string, cfg *config.Config) error {
+func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.TemperatureServiceClient, monitor *climon.TemperatureMonitor, clientID string, cfg *config.Config) error {
 	// Collect temperature readings
 	sensors, err := monitor.GetTemperatures()
 	if err != nil {
@@ -136,7 +136,7 @@ func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.Temperatur
 	}
 
 	// Filter sensors based on configuration
-	var filteredSensors []monitor.TemperatureSensor
+	var filteredSensors []climon.TemperatureSensor
 	for _, sensor := range sensors {
 		include := false
 		switch sensor.Type {

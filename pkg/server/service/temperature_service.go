@@ -4,8 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/nickheyer/jacuzzi/pkg/server/models"
 	jacuzziv1 "github.com/nickheyer/jacuzzi/proto/gen/go/proto"
-	"github.com/nickheyer/jacuzzi/server/models"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
