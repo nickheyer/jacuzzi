@@ -2,6 +2,8 @@
 
 SERVER_BINARY = bin/jacuzzi-server
 CLIENT_BINARY = bin/jacuzzi-client
+SERVER_CMD = cmd/server/main.go
+CLIENT_CMD = cmd/client/main.go
 PROTO_DIR = proto
 PROTO_GEN_DIR = proto/gen
 DB_DIR = data/db
@@ -27,11 +29,11 @@ build: server client
 
 server:
 	mkdir -p bin
-	go build -o $(SERVER_BINARY) ./server
+	go build -o $(SERVER_BINARY) $(SERVER_CMD)
 
 client:
 	mkdir -p bin
-	go build -o $(CLIENT_BINARY) ./client
+	go build -o $(CLIENT_BINARY) $(CLIENT_CMD)
 
 # Run server
 run-server: server

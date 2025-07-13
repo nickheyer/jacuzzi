@@ -14,8 +14,10 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Port int    `mapstructure:"port"`
-	Host string `mapstructure:"host"`
+	Port     int    `mapstructure:"port"`
+	Host     string `mapstructure:"host"`
+	HTTPPort int    `mapstructure:"http_port"`
+	HTTPHost string `mapstructure:"http_host"`
 }
 
 type DatabaseConfig struct {
@@ -39,6 +41,8 @@ func Load() (*Config, error) {
 	// Set defaults
 	viper.SetDefault("server.port", 50051)
 	viper.SetDefault("server.host", "")
+	viper.SetDefault("server.http_port", 8080)
+	viper.SetDefault("server.http_host", "")
 	viper.SetDefault("database.type", "sqlite")
 	viper.SetDefault("database.host", "localhost")
 	viper.SetDefault("database.port", 5432)
@@ -54,6 +58,8 @@ func Load() (*Config, error) {
 	// Bind specific environment variables
 	viper.BindEnv("server.port", "JACUZZI_SERVER_PORT")
 	viper.BindEnv("server.host", "JACUZZI_SERVER_HOST")
+	viper.BindEnv("server.http_port", "JACUZZI_SERVER_HTTP_PORT")
+	viper.BindEnv("server.http_host", "JACUZZI_SERVER_HTTP_HOST")
 	viper.BindEnv("database.type", "JACUZZI_DB_TYPE")
 	viper.BindEnv("database.host", "JACUZZI_DB_HOST")
 	viper.BindEnv("database.port", "JACUZZI_DB_PORT")

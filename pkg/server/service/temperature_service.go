@@ -155,3 +155,17 @@ func (s *TemperatureService) GetCurrentTemperatures(ctx context.Context, req *ja
 		Readings: protoReadings,
 	}, nil
 }
+
+func (s *TemperatureService) GetDistinctClients(ctx context.Context) ([]string, error) {
+	var clients []string
+	err := s.db.Model(&models.Client{}).
+		Distinct("client_id").
+		Order("client_id").
+		Pluck("client_id", &clients).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return clients, nil
+}

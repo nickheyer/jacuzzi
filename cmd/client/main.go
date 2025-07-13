@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"context"
@@ -191,4 +191,8 @@ func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.Temperatur
 
 	log.Printf("Successfully sent %d temperature readings", len(readings))
 	return nil
+}
+
+func main() {
+	Execute()
 }
