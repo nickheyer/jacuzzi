@@ -8,10 +8,10 @@ import (
 	"os/signal"
 	"syscall"
 
+	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1"
 	"github.com/nickheyer/jacuzzi/pkg/server/config"
 	"github.com/nickheyer/jacuzzi/pkg/server/db"
 	"github.com/nickheyer/jacuzzi/pkg/server/service"
-	jacuzziv1 "github.com/nickheyer/jacuzzi/proto/gen/go/proto"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"

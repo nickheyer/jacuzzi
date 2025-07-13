@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package jacuzzi.v1;
 
-option go_package = "github.com/nickheyer/jacuzzi/proto/gen/go/jacuzzi/v1;jacuzziv1";
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
 
 import "google/protobuf/timestamp.proto";
 

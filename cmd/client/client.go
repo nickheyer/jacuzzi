@@ -9,10 +9,9 @@ import (
 
 	"github.com/nickheyer/jacuzzi/pkg/client/config"
 	climon "github.com/nickheyer/jacuzzi/pkg/client/monitor"
+	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-
-	jacuzziv1 "github.com/nickheyer/jacuzzi/proto/gen/go/proto"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/protobuf/types/known/timestamppb"

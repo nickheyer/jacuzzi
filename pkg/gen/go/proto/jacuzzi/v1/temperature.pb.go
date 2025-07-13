@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        (unknown)
-// source: proto/temperature.proto
+// source: proto/jacuzzi/v1/temperature.proto
 
 package jacuzziv1
 
@@ -37,7 +37,7 @@ type TemperatureReading struct {
 
 func (x *TemperatureReading) Reset() {
 	*x = TemperatureReading{}
-	mi := &file_proto_temperature_proto_msgTypes[0]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -49,7 +49,7 @@ func (x *TemperatureReading) String() string {
 func (*TemperatureReading) ProtoMessage() {}
 
 func (x *TemperatureReading) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[0]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -62,7 +62,7 @@ func (x *TemperatureReading) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TemperatureReading.ProtoReflect.Descriptor instead.
 func (*TemperatureReading) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{0}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *TemperatureReading) GetSensorId() string {
@@ -117,7 +117,7 @@ type SubmitTemperatureRequest struct {
 
 func (x *SubmitTemperatureRequest) Reset() {
 	*x = SubmitTemperatureRequest{}
-	mi := &file_proto_temperature_proto_msgTypes[1]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -129,7 +129,7 @@ func (x *SubmitTemperatureRequest) String() string {
 func (*SubmitTemperatureRequest) ProtoMessage() {}
 
 func (x *SubmitTemperatureRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[1]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -142,7 +142,7 @@ func (x *SubmitTemperatureRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitTemperatureRequest.ProtoReflect.Descriptor instead.
 func (*SubmitTemperatureRequest) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{1}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *SubmitTemperatureRequest) GetReadings() []*TemperatureReading {
@@ -163,7 +163,7 @@ type SubmitTemperatureResponse struct {
 
 func (x *SubmitTemperatureResponse) Reset() {
 	*x = SubmitTemperatureResponse{}
-	mi := &file_proto_temperature_proto_msgTypes[2]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -175,7 +175,7 @@ func (x *SubmitTemperatureResponse) String() string {
 func (*SubmitTemperatureResponse) ProtoMessage() {}
 
 func (x *SubmitTemperatureResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[2]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -188,7 +188,7 @@ func (x *SubmitTemperatureResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SubmitTemperatureResponse.ProtoReflect.Descriptor instead.
 func (*SubmitTemperatureResponse) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{2}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *SubmitTemperatureResponse) GetSuccess() bool {
@@ -219,7 +219,7 @@ type GetTemperatureHistoryRequest struct {
 
 func (x *GetTemperatureHistoryRequest) Reset() {
 	*x = GetTemperatureHistoryRequest{}
-	mi := &file_proto_temperature_proto_msgTypes[3]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -231,7 +231,7 @@ func (x *GetTemperatureHistoryRequest) String() string {
 func (*GetTemperatureHistoryRequest) ProtoMessage() {}
 
 func (x *GetTemperatureHistoryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[3]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -244,7 +244,7 @@ func (x *GetTemperatureHistoryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTemperatureHistoryRequest.ProtoReflect.Descriptor instead.
 func (*GetTemperatureHistoryRequest) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{3}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetTemperatureHistoryRequest) GetClientId() string {
@@ -292,7 +292,7 @@ type GetTemperatureHistoryResponse struct {
 
 func (x *GetTemperatureHistoryResponse) Reset() {
 	*x = GetTemperatureHistoryResponse{}
-	mi := &file_proto_temperature_proto_msgTypes[4]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -304,7 +304,7 @@ func (x *GetTemperatureHistoryResponse) String() string {
 func (*GetTemperatureHistoryResponse) ProtoMessage() {}
 
 func (x *GetTemperatureHistoryResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[4]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -317,7 +317,7 @@ func (x *GetTemperatureHistoryResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTemperatureHistoryResponse.ProtoReflect.Descriptor instead.
 func (*GetTemperatureHistoryResponse) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{4}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *GetTemperatureHistoryResponse) GetReadings() []*TemperatureReading {
@@ -337,7 +337,7 @@ type GetCurrentTemperaturesRequest struct {
 
 func (x *GetCurrentTemperaturesRequest) Reset() {
 	*x = GetCurrentTemperaturesRequest{}
-	mi := &file_proto_temperature_proto_msgTypes[5]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -349,7 +349,7 @@ func (x *GetCurrentTemperaturesRequest) String() string {
 func (*GetCurrentTemperaturesRequest) ProtoMessage() {}
 
 func (x *GetCurrentTemperaturesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[5]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -362,7 +362,7 @@ func (x *GetCurrentTemperaturesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCurrentTemperaturesRequest.ProtoReflect.Descriptor instead.
 func (*GetCurrentTemperaturesRequest) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{5}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GetCurrentTemperaturesRequest) GetClientId() string {
@@ -382,7 +382,7 @@ type GetCurrentTemperaturesResponse struct {
 
 func (x *GetCurrentTemperaturesResponse) Reset() {
 	*x = GetCurrentTemperaturesResponse{}
-	mi := &file_proto_temperature_proto_msgTypes[6]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -394,7 +394,7 @@ func (x *GetCurrentTemperaturesResponse) String() string {
 func (*GetCurrentTemperaturesResponse) ProtoMessage() {}
 
 func (x *GetCurrentTemperaturesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_temperature_proto_msgTypes[6]
+	mi := &file_proto_jacuzzi_v1_temperature_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -407,7 +407,7 @@ func (x *GetCurrentTemperaturesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCurrentTemperaturesResponse.ProtoReflect.Descriptor instead.
 func (*GetCurrentTemperaturesResponse) Descriptor() ([]byte, []int) {
-	return file_proto_temperature_proto_rawDescGZIP(), []int{6}
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GetCurrentTemperaturesResponse) GetReadings() []*TemperatureReading {
@@ -417,11 +417,11 @@ func (x *GetCurrentTemperaturesResponse) GetReadings() []*TemperatureReading {
 	return nil
 }
 
-var File_proto_temperature_proto protoreflect.FileDescriptor
+var File_proto_jacuzzi_v1_temperature_proto protoreflect.FileDescriptor
 
-const file_proto_temperature_proto_rawDesc = "" +
+const file_proto_jacuzzi_v1_temperature_proto_rawDesc = "" +
 	"\n" +
-	"\x17proto/temperature.proto\x12\n" +
+	"\"proto/jacuzzi/v1/temperature.proto\x12\n" +
 	"jacuzzi.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfb\x01\n" +
 	"\x12TemperatureReading\x12\x1b\n" +
 	"\tsensor_id\x18\x01 \x01(\tR\bsensorId\x12\x1b\n" +
@@ -453,25 +453,25 @@ const file_proto_temperature_proto_rawDesc = "" +
 	"\x12TemperatureService\x12`\n" +
 	"\x11SubmitTemperature\x12$.jacuzzi.v1.SubmitTemperatureRequest\x1a%.jacuzzi.v1.SubmitTemperatureResponse\x12l\n" +
 	"\x15GetTemperatureHistory\x12(.jacuzzi.v1.GetTemperatureHistoryRequest\x1a).jacuzzi.v1.GetTemperatureHistoryResponse\x12o\n" +
-	"\x16GetCurrentTemperatures\x12).jacuzzi.v1.GetCurrentTemperaturesRequest\x1a*.jacuzzi.v1.GetCurrentTemperaturesResponseB\xa6\x01\n" +
-	"\x0ecom.jacuzzi.v1B\x10TemperatureProtoP\x01Z9github.com/nickheyer/jacuzzi/proto/gen/go/proto;jacuzziv1\xa2\x02\x03JXX\xaa\x02\n" +
+	"\x16GetCurrentTemperatures\x12).jacuzzi.v1.GetCurrentTemperaturesRequest\x1a*.jacuzzi.v1.GetCurrentTemperaturesResponseB\xaf\x01\n" +
+	"\x0ecom.jacuzzi.v1B\x10TemperatureProtoP\x01ZBgithub.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1;jacuzziv1\xa2\x02\x03JXX\xaa\x02\n" +
 	"Jacuzzi.V1\xca\x02\n" +
 	"Jacuzzi\\V1\xe2\x02\x16Jacuzzi\\V1\\GPBMetadata\xea\x02\vJacuzzi::V1b\x06proto3"
 
 var (
-	file_proto_temperature_proto_rawDescOnce sync.Once
-	file_proto_temperature_proto_rawDescData []byte
+	file_proto_jacuzzi_v1_temperature_proto_rawDescOnce sync.Once
+	file_proto_jacuzzi_v1_temperature_proto_rawDescData []byte
 )
 
-func file_proto_temperature_proto_rawDescGZIP() []byte {
-	file_proto_temperature_proto_rawDescOnce.Do(func() {
-		file_proto_temperature_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_temperature_proto_rawDesc), len(file_proto_temperature_proto_rawDesc)))
+func file_proto_jacuzzi_v1_temperature_proto_rawDescGZIP() []byte {
+	file_proto_jacuzzi_v1_temperature_proto_rawDescOnce.Do(func() {
+		file_proto_jacuzzi_v1_temperature_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_jacuzzi_v1_temperature_proto_rawDesc), len(file_proto_jacuzzi_v1_temperature_proto_rawDesc)))
 	})
-	return file_proto_temperature_proto_rawDescData
+	return file_proto_jacuzzi_v1_temperature_proto_rawDescData
 }
 
-var file_proto_temperature_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
-var file_proto_temperature_proto_goTypes = []any{
+var file_proto_jacuzzi_v1_temperature_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_proto_jacuzzi_v1_temperature_proto_goTypes = []any{
 	(*TemperatureReading)(nil),             // 0: jacuzzi.v1.TemperatureReading
 	(*SubmitTemperatureRequest)(nil),       // 1: jacuzzi.v1.SubmitTemperatureRequest
 	(*SubmitTemperatureResponse)(nil),      // 2: jacuzzi.v1.SubmitTemperatureResponse
@@ -481,7 +481,7 @@ var file_proto_temperature_proto_goTypes = []any{
 	(*GetCurrentTemperaturesResponse)(nil), // 6: jacuzzi.v1.GetCurrentTemperaturesResponse
 	(*timestamppb.Timestamp)(nil),          // 7: google.protobuf.Timestamp
 }
-var file_proto_temperature_proto_depIdxs = []int32{
+var file_proto_jacuzzi_v1_temperature_proto_depIdxs = []int32{
 	7, // 0: jacuzzi.v1.TemperatureReading.timestamp:type_name -> google.protobuf.Timestamp
 	0, // 1: jacuzzi.v1.SubmitTemperatureRequest.readings:type_name -> jacuzzi.v1.TemperatureReading
 	7, // 2: jacuzzi.v1.GetTemperatureHistoryRequest.start_time:type_name -> google.protobuf.Timestamp
@@ -501,26 +501,26 @@ var file_proto_temperature_proto_depIdxs = []int32{
 	0, // [0:6] is the sub-list for field type_name
 }
 
-func init() { file_proto_temperature_proto_init() }
-func file_proto_temperature_proto_init() {
-	if File_proto_temperature_proto != nil {
+func init() { file_proto_jacuzzi_v1_temperature_proto_init() }
+func file_proto_jacuzzi_v1_temperature_proto_init() {
+	if File_proto_jacuzzi_v1_temperature_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_temperature_proto_rawDesc), len(file_proto_temperature_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_jacuzzi_v1_temperature_proto_rawDesc), len(file_proto_jacuzzi_v1_temperature_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_proto_temperature_proto_goTypes,
-		DependencyIndexes: file_proto_temperature_proto_depIdxs,
-		MessageInfos:      file_proto_temperature_proto_msgTypes,
+		GoTypes:           file_proto_jacuzzi_v1_temperature_proto_goTypes,
+		DependencyIndexes: file_proto_jacuzzi_v1_temperature_proto_depIdxs,
+		MessageInfos:      file_proto_jacuzzi_v1_temperature_proto_msgTypes,
 	}.Build()
-	File_proto_temperature_proto = out.File
-	file_proto_temperature_proto_goTypes = nil
-	file_proto_temperature_proto_depIdxs = nil
+	File_proto_jacuzzi_v1_temperature_proto = out.File
+	file_proto_jacuzzi_v1_temperature_proto_goTypes = nil
+	file_proto_jacuzzi_v1_temperature_proto_depIdxs = nil
 }
