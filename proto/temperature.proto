@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package jacuzzi.v1;
+
+option go_package = "github.com/nickheyer/jacuzzi/proto/gen/go/jacuzzi/v1;jacuzziv1";
+
+import "google/protobuf/timestamp.proto";
+
+// Temperature reading from a sensor
+message TemperatureReading {
+  string sensor_id = 1;
+  string client_id = 2;
+  double temperature_celsius = 3;
+  google.protobuf.Timestamp timestamp = 4;
+  string sensor_type = 5; // CPU, GPU, DISK, etc.
+  string sensor_name = 6; // Human readable name
+}
+
+// Request to submit temperature readings
+message SubmitTemperatureRequest {
+  repeated TemperatureReading readings = 1;
+}
+
+// Response for temperature submission
+message SubmitTemperatureResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Request to get temperature history
+message GetTemperatureHistoryRequest {
+  string client_id = 1;
+  string sensor_id = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+  int32 limit = 5;
+}
+
+// Response with temperature history
+message GetTemperatureHistoryResponse {
+  repeated TemperatureReading readings = 1;
+}
+
+// Request to get current temperatures for all sensors
+message GetCurrentTemperaturesRequest {
+  string client_id = 1;
+}
+
+// Response with current temperatures
+message GetCurrentTemperaturesResponse {
+  repeated TemperatureReading readings = 1;
+}
+
+// Service definition for temperature monitoring
+service TemperatureService {
+  // Submit temperature readings from client
+  rpc SubmitTemperature(SubmitTemperatureRequest) returns (SubmitTemperatureResponse);
+  
+  // Get temperature history for a sensor
+  rpc GetTemperatureHistory(GetTemperatureHistoryRequest) returns (GetTemperatureHistoryResponse);
+  
+  // Get current temperatures for all sensors of a client
+  rpc GetCurrentTemperatures(GetCurrentTemperaturesRequest) returns (GetCurrentTemperaturesResponse);
+}

@@ -1,0 +1,24 @@
+# Jacuzzi Server Configuration Example
+# Copy this file to jacuzzi.yaml and modify as needed
+
+server:
+  # Server port to listen on
+  port: 50051
+  # Server host to bind to (empty means all interfaces)
+  host: ""
+
+database:
+  # Database type: sqlite or postgres
+  type: sqlite
+  
+  # SQLite configuration
+  # Path to SQLite database file
+  name: data/db/jacuzzi.db
+  
+  # PostgreSQL configuration (used when type is postgres)
+  # host: localhost
+  # port: 5432
+  # user: jacuzzi
+  # password: ""
+  # name: jacuzzi
+  # sslmode: disable

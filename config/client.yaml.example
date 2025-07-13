@@ -1,0 +1,25 @@
+# Jacuzzi Client Configuration Example
+# Copy this file to client.yaml and modify as needed
+
+# Server connection settings
+server:
+  # Server address (host:port)
+  address: localhost:50051
+  # Connection timeout in seconds
+  timeout: 10
+
+# Client settings
+client:
+  # Client ID (defaults to hostname if not set)
+  id: ""
+  # Temperature reading interval
+  interval: 30s
+
+# Monitoring settings
+monitoring:
+  # Enable CPU temperature monitoring
+  cpu: true
+  # Enable GPU temperature monitoring
+  gpu: true
+  # Enable disk temperature monitoring
+  disk: true
