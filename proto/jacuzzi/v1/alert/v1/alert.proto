@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package jacuzzi.v1.alert.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
+
+// Alert rule definition
+message AlertRule {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string client_id = 4; // Apply to specific client or empty for all
+  string sensor_id = 5; // Apply to specific sensor or empty for all
+  string sensor_type = 6; // Apply to sensor type (CPU, GPU, etc) or empty for all
+  AlertCondition condition = 7;
+  repeated AlertAction actions = 8;
+  bool enabled = 9;
+  google.protobuf.Timestamp created_at = 10;
+  google.protobuf.Timestamp updated_at = 11;
+}
+
+// Alert condition
+message AlertCondition {
+  enum Operator {
+    OPERATOR_UNSPECIFIED = 0;
+    OPERATOR_GREATER_THAN = 1;
+    OPERATOR_LESS_THAN = 2;
+    OPERATOR_EQUAL = 3;
+    OPERATOR_NOT_EQUAL = 4;
+  }
+
+  Operator operator = 1;
+  double threshold = 2;
+  int32 duration_seconds = 3; // How long condition must be true
+}
+
+// Alert action
+message AlertAction {
+  enum ActionType {
+    ACTION_TYPE_UNSPECIFIED = 0;
+    ACTION_TYPE_EMAIL = 1;
+    ACTION_TYPE_WEBHOOK = 2;
+    ACTION_TYPE_LOG = 3;
+  }
+
+  ActionType type = 1;
+  map<string, string> config = 2; // Action-specific configuration
+}
+
+// Alert instance when rule is triggered
+message Alert {
+  string id = 1;
+  string rule_id = 2;
+  string client_id = 3;
+  string sensor_id = 4;
+  double value = 5;
+  google.protobuf.Timestamp triggered_at = 6;
+  google.protobuf.Timestamp resolved_at = 7;
+  bool is_active = 8;
+  string message = 9;
+}
+
+// Request to create alert rule
+message CreateAlertRuleRequest {
+  AlertRule rule = 1;
+}
+
+// Response for alert rule creation
+message CreateAlertRuleResponse {
+  string rule_id = 1;
+  bool success = 2;
+  string message = 3;
+}
+
+// Request to list alert rules
+message ListAlertRulesRequest {
+  string client_id = 1; // Filter by client
+  bool enabled_only = 2;
+  int32 limit = 3;
+  int32 offset = 4;
+}
+
+// Response with alert rules
+message ListAlertRulesResponse {
+  repeated AlertRule rules = 1;
+  int32 total_count = 2;
+}
+
+// Request to delete alert rule
+message DeleteAlertRuleRequest {
+  string rule_id = 1;
+}
+
+// Response for alert rule deletion
+message DeleteAlertRuleResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+// Request to get alert history
+message GetAlertHistoryRequest {
+  string rule_id = 1;
+  string client_id = 2;
+  bool active_only = 3;
+  google.protobuf.Timestamp start_time = 4;
+  google.protobuf.Timestamp end_time = 5;
+  int32 limit = 6;
+}
+
+// Response with alert history
+message GetAlertHistoryResponse {
+  repeated Alert alerts = 1;
+}

@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package jacuzzi.v1.settings.v1;
+
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
+
+// System settings
+message Settings {
+  // General settings
+  string site_name = 1;
+  string timezone = 2;
+
+  // Data retention settings
+  int32 retention_days = 3; // How many days to keep temperature data
+  int32 aggregation_interval_seconds = 4; // Interval for data aggregation
+
+  // Display settings
+  string temperature_unit = 5; // "celsius" or "fahrenheit"
+  string theme = 6; // "light", "dark", or "system"
+
+  // Alert settings
+  bool alerts_enabled = 7;
+  int32 alert_check_interval_seconds = 8;
+
+  // Email settings for alerts
+  EmailSettings email_settings = 9;
+
+  // Performance settings
+  int32 max_concurrent_clients = 10;
+  int32 api_rate_limit = 11; // requests per minute
+}
+
+// Email configuration
+message EmailSettings {
+  string smtp_host = 1;
+  int32 smtp_port = 2;
+  string smtp_username = 3;
+  string smtp_password = 4; // Should be encrypted in storage
+  bool use_tls = 5;
+  string from_address = 6;
+  repeated string admin_emails = 7; // Default recipients for alerts
+}
+
+// Request to get settings
+message GetSettingsRequest {
+  // Empty for now
+}
+
+// Response with settings
+message GetSettingsResponse {
+  Settings settings = 1;
+}
+
+// Request to update settings
+message UpdateSettingsRequest {
+  Settings settings = 1;
+}
+
+// Response for settings update
+message UpdateSettingsResponse {
+  bool success = 1;
+  string message = 2;
+}

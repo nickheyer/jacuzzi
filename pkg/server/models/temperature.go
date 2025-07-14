@@ -20,11 +20,16 @@ func (TemperatureReading) TableName() string {
 }
 
 type Client struct {
-	ID        uint   `gorm:"primaryKey"`
-	ClientID  string `gorm:"uniqueIndex;not null"`
+	ID        uint      `gorm:"primaryKey"`
+	ClientID  string    `gorm:"uniqueIndex;not null"`
 	Hostname  string
 	IPAddress string
+	OS        string
+	Arch      string
+	FirstSeen time.Time
 	LastSeen  time.Time
+	IsOnline  bool      `gorm:"default:false"`
+	Metadata  string    `gorm:"type:text"` // JSON string for metadata map
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

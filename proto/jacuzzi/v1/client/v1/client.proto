@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package jacuzzi.v1.client.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
+
+// Client information
+message Client {
+  string id = 1;
+  string hostname = 2;
+  string ip_address = 3;
+  string os = 4;
+  string arch = 5;
+  google.protobuf.Timestamp first_seen = 6;
+  google.protobuf.Timestamp last_seen = 7;
+  bool is_online = 8;
+  map<string, string> metadata = 9; // Additional client metadata
+}
+
+// Request to list clients
+message ListClientsRequest {
+  bool online_only = 1;
+  int32 limit = 2;
+  int32 offset = 3;
+}
+
+// Response with list of clients
+message ListClientsResponse {
+  repeated Client clients = 1;
+  int32 total_count = 2;
+}
+
+// Request to get a specific client
+message GetClientRequest {
+  string client_id = 1;
+}
+
+// Response with client details
+message GetClientResponse {
+  Client client = 1;
+  repeated SensorInfo sensors = 2;
+}
+
+// Sensor information for a client
+message SensorInfo {
+  string sensor_id = 1;
+  string sensor_type = 2;
+  string sensor_name = 3;
+  double current_temperature = 4;
+  google.protobuf.Timestamp last_reading = 5;
+}
+
+// Request to update client info
+message UpdateClientRequest {
+  string client_id = 1;
+  map<string, string> metadata = 2;
+}
+
+// Response for client update
+message UpdateClientResponse {
+  bool success = 1;
+  string message = 2;
+}

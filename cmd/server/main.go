@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/improbable-eng/grpc-web/go/grpcweb"
-	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1"
+	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1"
 	"github.com/nickheyer/jacuzzi/pkg/server/config"
 	"github.com/nickheyer/jacuzzi/pkg/server/db"
 	"github.com/nickheyer/jacuzzi/pkg/server/service"
@@ -107,9 +107,18 @@ func runServer(cmd *cobra.Command, args []string) error {
 	// Create gRPC server
 	grpcServer := grpc.NewServer()
 
-	// Register temperature service
+	// Register all services
 	tempService := service.NewTemperatureService(database)
 	jacuzziv1.RegisterTemperatureServiceServer(grpcServer, tempService)
+	
+	clientService := service.NewClientService(database)
+	jacuzziv1.RegisterClientServiceServer(grpcServer, clientService)
+	
+	alertService := service.NewAlertService(database)
+	jacuzziv1.RegisterAlertServiceServer(grpcServer, alertService)
+	
+	settingsService := service.NewSettingsService(database)
+	jacuzziv1.RegisterSettingsServiceServer(grpcServer, settingsService)
 
 	// Register reflection service for easier debugging
 	reflection.Register(grpcServer)

@@ -7,6 +7,7 @@ import (
 )
 
 //go:generate npm i
+//go:generate rm -rf ./src/lib/proto
 //go:generate npm run gen
 //go:generate npm run build
 //go:embed all:build

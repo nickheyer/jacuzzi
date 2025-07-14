@@ -25,7 +25,7 @@ proto:
 	buf generate
 
 # Build binaries
-build: server client
+build: clean gen server client
 
 server:
 	mkdir -p bin

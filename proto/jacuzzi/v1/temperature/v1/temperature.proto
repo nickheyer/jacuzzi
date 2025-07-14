@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package jacuzzi.v1;
-
-option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
+package jacuzzi.v1.temperature.v1;
 
 import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
 
 // Temperature reading from a sensor
 message TemperatureReading {
@@ -51,14 +51,25 @@ message GetCurrentTemperaturesResponse {
   repeated TemperatureReading readings = 1;
 }
 
-// Service definition for temperature monitoring
-service TemperatureService {
-  // Submit temperature readings from client
-  rpc SubmitTemperature(SubmitTemperatureRequest) returns (SubmitTemperatureResponse);
-  
-  // Get temperature history for a sensor
-  rpc GetTemperatureHistory(GetTemperatureHistoryRequest) returns (GetTemperatureHistoryResponse);
-  
-  // Get current temperatures for all sensors of a client
-  rpc GetCurrentTemperatures(GetCurrentTemperaturesRequest) returns (GetCurrentTemperaturesResponse);
+// Request to get temperature statistics
+message GetTemperatureStatsRequest {
+  string client_id = 1;
+  string sensor_id = 2;
+  google.protobuf.Timestamp start_time = 3;
+  google.protobuf.Timestamp end_time = 4;
+}
+
+// Temperature statistics
+message TemperatureStats {
+  double min_temperature = 1;
+  double max_temperature = 2;
+  double avg_temperature = 3;
+  int32 reading_count = 4;
+  google.protobuf.Timestamp period_start = 5;
+  google.protobuf.Timestamp period_end = 6;
+}
+
+// Response with temperature statistics
+message GetTemperatureStatsResponse {
+  map<string, TemperatureStats> sensor_stats = 1; // sensor_id -> stats
 }

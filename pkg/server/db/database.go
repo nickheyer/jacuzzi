@@ -59,6 +59,10 @@ func RunMigrations(db *gorm.DB) error {
 		&models.Client{},
 		&models.Sensor{},
 		&models.TemperatureReading{},
+		&models.AlertRule{},
+		&models.AlertAction{},
+		&models.Alert{},
+		&models.Setting{},
 	)
 	if err != nil {
 		return fmt.Errorf("failed to auto migrate: %w", err)

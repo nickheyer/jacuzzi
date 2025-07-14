@@ -1,0 +1,61 @@
+syntax = "proto3";
+
+package jacuzzi.v1;
+
+import "jacuzzi/v1/alert/v1/alert.proto";
+import "jacuzzi/v1/client/v1/client.proto";
+import "jacuzzi/v1/settings/v1/settings.proto";
+import "jacuzzi/v1/temperature/v1/temperature.proto";
+
+option go_package = "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1;jacuzziv1";
+
+// Service definition for temperature monitoring
+service TemperatureService {
+  // Submit temperature readings from client
+  rpc SubmitTemperature(.jacuzzi.v1.temperature.v1.SubmitTemperatureRequest) returns (.jacuzzi.v1.temperature.v1.SubmitTemperatureResponse);
+
+  // Get temperature history for a sensor
+  rpc GetTemperatureHistory(.jacuzzi.v1.temperature.v1.GetTemperatureHistoryRequest) returns (.jacuzzi.v1.temperature.v1.GetTemperatureHistoryResponse);
+
+  // Get current temperatures for all sensors of a client
+  rpc GetCurrentTemperatures(.jacuzzi.v1.temperature.v1.GetCurrentTemperaturesRequest) returns (.jacuzzi.v1.temperature.v1.GetCurrentTemperaturesResponse);
+
+  // Get temperature statistics
+  rpc GetTemperatureStats(.jacuzzi.v1.temperature.v1.GetTemperatureStatsRequest) returns (.jacuzzi.v1.temperature.v1.GetTemperatureStatsResponse);
+}
+
+// Service for managing clients
+service ClientService {
+  // List all clients
+  rpc ListClients(.jacuzzi.v1.client.v1.ListClientsRequest) returns (.jacuzzi.v1.client.v1.ListClientsResponse);
+
+  // Get client details
+  rpc GetClient(.jacuzzi.v1.client.v1.GetClientRequest) returns (.jacuzzi.v1.client.v1.GetClientResponse);
+
+  // Update client info
+  rpc UpdateClient(.jacuzzi.v1.client.v1.UpdateClientRequest) returns (.jacuzzi.v1.client.v1.UpdateClientResponse);
+}
+
+// Service for managing alerts
+service AlertService {
+  // Create or update alert rule
+  rpc CreateAlertRule(.jacuzzi.v1.alert.v1.CreateAlertRuleRequest) returns (.jacuzzi.v1.alert.v1.CreateAlertRuleResponse);
+
+  // List alert rules
+  rpc ListAlertRules(.jacuzzi.v1.alert.v1.ListAlertRulesRequest) returns (.jacuzzi.v1.alert.v1.ListAlertRulesResponse);
+
+  // Delete alert rule
+  rpc DeleteAlertRule(.jacuzzi.v1.alert.v1.DeleteAlertRuleRequest) returns (.jacuzzi.v1.alert.v1.DeleteAlertRuleResponse);
+
+  // Get alert history
+  rpc GetAlertHistory(.jacuzzi.v1.alert.v1.GetAlertHistoryRequest) returns (.jacuzzi.v1.alert.v1.GetAlertHistoryResponse);
+}
+
+// Service for managing settings
+service SettingsService {
+  // Get settings
+  rpc GetSettings(.jacuzzi.v1.settings.v1.GetSettingsRequest) returns (.jacuzzi.v1.settings.v1.GetSettingsResponse);
+
+  // Update settings
+  rpc UpdateSettings(.jacuzzi.v1.settings.v1.UpdateSettingsRequest) returns (.jacuzzi.v1.settings.v1.UpdateSettingsResponse);
+}

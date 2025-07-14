@@ -4,7 +4,8 @@ import (
 	"context"
 	"time"
 
-	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1"
+	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1"
+	temperaturev1 "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1/temperature/v1"
 	"github.com/nickheyer/jacuzzi/pkg/server/models"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -21,7 +22,7 @@ func NewTemperatureService(db *gorm.DB) *TemperatureService {
 	return &TemperatureService{db: db}
 }
 
-func (s *TemperatureService) SubmitTemperature(ctx context.Context, req *jacuzziv1.SubmitTemperatureRequest) (*jacuzziv1.SubmitTemperatureResponse, error) {
+func (s *TemperatureService) SubmitTemperature(ctx context.Context, req *temperaturev1.SubmitTemperatureRequest) (*temperaturev1.SubmitTemperatureResponse, error) {
 	if len(req.Readings) == 0 {
 		return nil, status.Error(codes.InvalidArgument, "no readings provided")
 	}
@@ -29,12 +30,24 @@ func (s *TemperatureService) SubmitTemperature(ctx context.Context, req *jacuzzi
 	err := s.db.Transaction(func(tx *gorm.DB) error {
 		for _, reading := range req.Readings {
 			// Update or create client
+			now := time.Now()
 			client := &models.Client{
 				ClientID: reading.ClientId,
-				LastSeen: time.Now(),
+				LastSeen: now,
+				IsOnline: true,
 			}
 			if err := tx.Where("client_id = ?", reading.ClientId).FirstOrCreate(client).Error; err != nil {
 				return err
+			}
+			// Update LastSeen and IsOnline for existing clients
+			if client.ID != 0 {
+				tx.Model(client).Updates(map[string]interface{}{
+					"last_seen": now,
+					"is_online": true,
+				})
+			} else {
+				// Set FirstSeen for new clients
+				client.FirstSeen = now
 			}
 
 			// Update or create sensor
@@ -68,13 +81,13 @@ func (s *TemperatureService) SubmitTemperature(ctx context.Context, req *jacuzzi
 		return nil, status.Errorf(codes.Internal, "failed to save readings: %v", err)
 	}
 
-	return &jacuzziv1.SubmitTemperatureResponse{
+	return &temperaturev1.SubmitTemperatureResponse{
 		Success: true,
 		Message: "Temperature readings saved successfully",
 	}, nil
 }
 
-func (s *TemperatureService) GetTemperatureHistory(ctx context.Context, req *jacuzziv1.GetTemperatureHistoryRequest) (*jacuzziv1.GetTemperatureHistoryResponse, error) {
+func (s *TemperatureService) GetTemperatureHistory(ctx context.Context, req *temperaturev1.GetTemperatureHistoryRequest) (*temperaturev1.GetTemperatureHistoryResponse, error) {
 	query := s.db.Model(&models.TemperatureReading{})
 
 	if req.ClientId != "" {
@@ -101,9 +114,9 @@ func (s *TemperatureService) GetTemperatureHistory(ctx context.Context, req *jac
 		return nil, status.Errorf(codes.Internal, "failed to query temperature history: %v", err)
 	}
 
-	protoReadings := make([]*jacuzziv1.TemperatureReading, len(readings))
+	protoReadings := make([]*temperaturev1.TemperatureReading, len(readings))
 	for i, reading := range readings {
-		protoReadings[i] = &jacuzziv1.TemperatureReading{
+		protoReadings[i] = &temperaturev1.TemperatureReading{
 			SensorId:           reading.SensorID,
 			ClientId:           reading.ClientID,
 			TemperatureCelsius: reading.TemperatureCelsius,
@@ -113,12 +126,12 @@ func (s *TemperatureService) GetTemperatureHistory(ctx context.Context, req *jac
 		}
 	}
 
-	return &jacuzziv1.GetTemperatureHistoryResponse{
+	return &temperaturev1.GetTemperatureHistoryResponse{
 		Readings: protoReadings,
 	}, nil
 }
 
-func (s *TemperatureService) GetCurrentTemperatures(ctx context.Context, req *jacuzziv1.GetCurrentTemperaturesRequest) (*jacuzziv1.GetCurrentTemperaturesResponse, error) {
+func (s *TemperatureService) GetCurrentTemperatures(ctx context.Context, req *temperaturev1.GetCurrentTemperaturesRequest) (*temperaturev1.GetCurrentTemperaturesResponse, error) {
 	if req.ClientId == "" {
 		return nil, status.Error(codes.InvalidArgument, "client_id is required")
 	}
@@ -139,9 +152,9 @@ func (s *TemperatureService) GetCurrentTemperatures(ctx context.Context, req *ja
 		return nil, status.Errorf(codes.Internal, "failed to query current temperatures: %v", err)
 	}
 
-	protoReadings := make([]*jacuzziv1.TemperatureReading, len(readings))
+	protoReadings := make([]*temperaturev1.TemperatureReading, len(readings))
 	for i, reading := range readings {
-		protoReadings[i] = &jacuzziv1.TemperatureReading{
+		protoReadings[i] = &temperaturev1.TemperatureReading{
 			SensorId:           reading.SensorID,
 			ClientId:           reading.ClientID,
 			TemperatureCelsius: reading.TemperatureCelsius,
@@ -151,7 +164,7 @@ func (s *TemperatureService) GetCurrentTemperatures(ctx context.Context, req *ja
 		}
 	}
 
-	return &jacuzziv1.GetCurrentTemperaturesResponse{
+	return &temperaturev1.GetCurrentTemperaturesResponse{
 		Readings: protoReadings,
 	}, nil
 }
@@ -168,4 +181,66 @@ func (s *TemperatureService) GetDistinctClients(ctx context.Context) ([]string, 
 	}
 
 	return clients, nil
+}
+
+func (s *TemperatureService) GetTemperatureStats(ctx context.Context, req *temperaturev1.GetTemperatureStatsRequest) (*temperaturev1.GetTemperatureStatsResponse, error) {
+	baseQuery := s.db.Model(&models.TemperatureReading{})
+
+	if req.ClientId != "" {
+		baseQuery = baseQuery.Where("client_id = ?", req.ClientId)
+	}
+	if req.StartTime != nil {
+		baseQuery = baseQuery.Where("created_at >= ?", req.StartTime.AsTime())
+	}
+	if req.EndTime != nil {
+		baseQuery = baseQuery.Where("created_at <= ?", req.EndTime.AsTime())
+	}
+
+	// If specific sensor_id is requested, only get stats for that sensor
+	var sensorIds []string
+	if req.SensorId != "" {
+		sensorIds = []string{req.SensorId}
+	} else {
+		// Get all sensor IDs that match the criteria
+		if err := baseQuery.Distinct("sensor_id").Pluck("sensor_id", &sensorIds).Error; err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to get sensor IDs: %v", err)
+		}
+	}
+
+	sensorStats := make(map[string]*temperaturev1.TemperatureStats)
+	
+	for _, sensorId := range sensorIds {
+		query := baseQuery.Where("sensor_id = ?", sensorId)
+		
+		var stats struct {
+			AvgTemp float64
+			MinTemp float64
+			MaxTemp float64
+			Count   int32
+		}
+
+		err := query.Select(`
+			AVG(temperature_celsius) as avg_temp,
+			MIN(temperature_celsius) as min_temp,
+			MAX(temperature_celsius) as max_temp,
+			COUNT(*) as count
+		`).Scan(&stats).Error
+
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to calculate temperature stats for sensor %s: %v", sensorId, err)
+		}
+
+		sensorStats[sensorId] = &temperaturev1.TemperatureStats{
+			MinTemperature: stats.MinTemp,
+			MaxTemperature: stats.MaxTemp,
+			AvgTemperature: stats.AvgTemp,
+			ReadingCount:   stats.Count,
+			PeriodStart:    req.StartTime,
+			PeriodEnd:      req.EndTime,
+		}
+	}
+
+	return &temperaturev1.GetTemperatureStatsResponse{
+		SensorStats: sensorStats,
+	}, nil
 }

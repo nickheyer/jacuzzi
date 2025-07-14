@@ -9,7 +9,8 @@ import (
 
 	"github.com/nickheyer/jacuzzi/pkg/client/config"
 	climon "github.com/nickheyer/jacuzzi/pkg/client/monitor"
-	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/proto/jacuzzi/v1"
+	jacuzziv1 "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1"
+	temperaturev1 "github.com/nickheyer/jacuzzi/pkg/gen/go/jacuzzi/v1/temperature/v1"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
@@ -160,11 +161,11 @@ func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.Temperatur
 	}
 
 	// Convert to protobuf format
-	readings := make([]*jacuzziv1.TemperatureReading, len(filteredSensors))
+	readings := make([]*temperaturev1.TemperatureReading, len(filteredSensors))
 	timestamp := timestamppb.Now()
 
 	for i, sensor := range filteredSensors {
-		readings[i] = &jacuzziv1.TemperatureReading{
+		readings[i] = &temperaturev1.TemperatureReading{
 			SensorId:           sensor.ID,
 			ClientId:           clientID,
 			TemperatureCelsius: sensor.TempCelsius(),
@@ -176,7 +177,7 @@ func collectAndSendTemperatures(ctx context.Context, client jacuzziv1.Temperatur
 	}
 
 	// Send to server
-	req := &jacuzziv1.SubmitTemperatureRequest{
+	req := &temperaturev1.SubmitTemperatureRequest{
 		Readings: readings,
 	}
 
